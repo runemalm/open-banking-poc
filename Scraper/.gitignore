@@ -1,0 +1,70 @@
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa]ppPackages/
+*.appx
+*.appxbundle
+*.appxupload
+*.msix
+*.msixbundle
+*.msixupload
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.vsp
+
+# Auto-generated files
+*.log
+*.tlog
+*.ide
+
+# IDE settings
+.vscode/
+.idea/
+*.sln.iml
+*.csproj.user
+
+# Visual Studio Code files
+.vscode/
+
+# Package directories
+**/packages/
+*.nupkg
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+
+# DotNet specific folders
+*.pdb
+*.ilk
+*.obj/
+*.bin/
+*.cache/
+
+# Rider IDE specific
+.idea/
+*.sln.iml
+
+# Dependencies
+node_modules/
+*.nuget/
+*.props
+
+# Other files
+*.vs/
+*.tmp/
+*.log
+
+# Publish output
+*.publish/
+.publishOutput/
+
+# OS-specific files
+.DS_Store
+Thumbs.db

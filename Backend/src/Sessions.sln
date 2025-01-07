@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sessions", "Sessions\Sessions.csproj", "{2AAB0286-5906-4E52-87A8-288B18545153}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scraper", "..\..\Scraper\src\Scraper.csproj", "{DE534EA6-F329-44D2-8F68-ED0201A4174A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDD", "..\..\..\DDD.NET\src\DDD\DDD.csproj", "{D9B17D77-CA2B-4AEE-BB70-9C68532C48B3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2AAB0286-5906-4E52-87A8-288B18545153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AAB0286-5906-4E52-87A8-288B18545153}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AAB0286-5906-4E52-87A8-288B18545153}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AAB0286-5906-4E52-87A8-288B18545153}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE534EA6-F329-44D2-8F68-ED0201A4174A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE534EA6-F329-44D2-8F68-ED0201A4174A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE534EA6-F329-44D2-8F68-ED0201A4174A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE534EA6-F329-44D2-8F68-ED0201A4174A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9B17D77-CA2B-4AEE-BB70-9C68532C48B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9B17D77-CA2B-4AEE-BB70-9C68532C48B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9B17D77-CA2B-4AEE-BB70-9C68532C48B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9B17D77-CA2B-4AEE-BB70-9C68532C48B3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
