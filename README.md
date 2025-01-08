@@ -1,32 +1,37 @@
 # open-banking-poc
 
-A proof-of-concept demonstrating bank integration with a simple drop-in JS client.
+A open banking proof-of-concept for integrating with banks using PSD2 directive and webscraping.
 
 ## Purpose
 
-Part of [my portfolio](https://davidrunemalm.com)
+This project was created partly for [my portfolio of projects](https://davidrunemalm.com).
 
 ## Key Features
 
-- ✅ Scalable logically separated monolith.
-- ✅ Easily add more bank integrations.
-- ✅ Plug-and-play client for web applications.
+- ✅ Simple monolithic architecture.
+- ✅ Prepared for microservices.
+- ✅ One developer per bank integration.
+- ✅ Javascript SDK for website integration.
 
-## Website Integration Demo
+## Demo
 
 The demo will be available online soon.
 
 Please come back later.
 
-## Backend
+## Architecture
 
-The backend is written using C# and .NET8.
+TODO: ...
 
 ## Frontend
 
 The frontend is a JavaScript client SDK built using React and ready to drop-in for easy website integration.
 
-## Add Bank Integrations
+## Backend
+
+The backend is written using C# and .NET8.
+
+## Bank Integration Example
 
 You can add a new bank integration by simply subclassing the StateMachineBase class.
 
