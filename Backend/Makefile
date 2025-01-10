@@ -131,3 +131,125 @@ ef-database-update: ## Apply EF Core migrations to the database
 	--startup-project $(SRC)/Sessions \
 	--verbose
 	@echo "Database updated successfully."
+
+##########################################################################
+# GOOGLE CLOUD PLATFORM
+##########################################################################
+
+PROJECT_ID := open-banking-poc-447414
+REGION := europe-north1
+REPO_NAME := open-banking-poc
+IMAGE_NAME := $(APP)-backend
+IMAGE_TAG := latest
+CONTAINER_IMAGE := $(REGION)-docker.pkg.dev/$(PROJECT_ID)/$(REPO_NAME)/$(IMAGE_NAME):$(IMAGE_TAG)
+SERVICE_NAME := $(APP)-backend
+
+.PHONY: gcp-auth-login
+gcp-auth-login: ## Authenticate Google Cloud CLI
+	@echo "Authenticating Google Cloud CLI..."
+	@gcloud auth login
+	@echo "Authenticating with Google Cloud CLI completed successfully."
+
+.PHONY: gcp-auth-registry
+gcp-auth-registry: ## Authenticate Docker with Google Cloud Registry
+	@echo "Authenticating Docker with Google Cloud Registry..."
+	@gcloud auth configure-docker $(REGION)-docker.pkg.dev
+
+.PHONY: gcp-set-account
+gcp-set-account: ## Set the active Google Cloud account
+	@read -p "Enter the email address of the account to set as active: " ACCOUNT && \
+	echo "Setting active account to $$ACCOUNT..." && \
+	gcloud config set account $$ACCOUNT && \
+	echo "Active account successfully set to $$ACCOUNT."
+
+.PHONY: gcp-list-configs
+gcp-list-configs: ## List all Google Cloud CLI configurations
+	@echo "Listing all Google Cloud CLI configurations..."
+	@gcloud config configurations list
+
+.PHONY: gcp-create-config
+gcp-create-config: ## Create a new Google Cloud CLI configuration for your project
+	@read -p "Enter the name of the new configuration: " CONFIG_NAME && \
+	read -p "Enter the project ID to associate with this configuration: " PROJECT_ID && \
+	echo "Creating new configuration '$$CONFIG_NAME'..." && \
+	gcloud config configurations create $$CONFIG_NAME && \
+	gcloud config configurations activate $$CONFIG_NAME && \
+	gcloud config set project $$PROJECT_ID && \
+	echo "Configuration '$$CONFIG_NAME' created and associated with project '$$PROJECT_ID'."
+
+.PHONY: gcp-set-config
+gcp-set-config: ## Set a specific Google Cloud CLI configuration
+	@read -p "Enter the name of the configuration to set: " CONFIG_NAME && \
+	echo "Setting active configuration to $$CONFIG_NAME..." && \
+	gcloud config configurations activate $$CONFIG_NAME && \
+	echo "Active configuration successfully set to $$CONFIG_NAME."
+
+.PHONY: gcp-auth-credentials
+gcp-auth-credentials: ## Set up Application Default Credentials for your account
+	@echo "Setting up Application Default Credentials (ADC)..."
+	@gcloud auth application-default login
+	@echo "Application Default Credentials successfully set up."
+
+.PHONY: gcp-list-projects
+gcp-list-projects: ## List all Google Cloud projects
+	@echo "Listing all Google Cloud projects..."
+	@gcloud projects list
+
+.PHONY: gcp-set-project
+gcp-set-project: ## Set the active Google Cloud project
+	@echo "Setting active project to $(PROJECT_ID)..."
+	@gcloud config set project $(PROJECT_ID)
+
+.PHONY: gcp-build
+gcp-build: ## Build the Docker image
+	@echo "Building Docker image..."
+	@docker build -t $(CONTAINER_IMAGE) .
+
+.PHONY: gcp-test-locally
+gcp-test-locally: ## Test the Docker image locally with ASPNETCORE_ENVIRONMENT set to Production
+	@echo "Running Docker image locally with ASPNETCORE_ENVIRONMENT=Production..."
+	@docker run -e ASPNETCORE_ENVIRONMENT=Production -p 8080:8080 $(CONTAINER_IMAGE)
+	@echo "Docker image is running on http://localhost:8080 with ASPNETCORE_ENVIRONMENT=Production"
+
+.PHONY: gcp-push
+gcp-push: ## Push the Docker image to Google Artifact Registry
+	@echo "Pushing Docker image to Google Artifact Registry..."
+	@docker push $(CONTAINER_IMAGE)
+
+.PHONY: gcp-deploy
+gcp-deploy: gcp-push ## Deploy the backend to Google Cloud Run
+	@echo "Deploying to Google Cloud Run..."
+	@gcloud run deploy $(SERVICE_NAME) \
+		--image=$(CONTAINER_IMAGE) \
+		--platform=managed \
+		--region=$(REGION) \
+		--allow-unauthenticated
+	@echo "Deployment successful!"
+
+.PHONY: gcp-get-url
+gcp-get-url: ## Get the static URL of the deployed Cloud Run backend
+	@echo "Retrieving the Cloud Run service URL for $(SERVICE_NAME)..."
+	@gcloud run services describe $(SERVICE_NAME) \
+		--platform=managed \
+		--region=$(REGION) \
+		--format="value(status.url)"
+
+.PHONY: gcp-autoscale
+gcp-autoscale: ## Update autoscaling rules for the Cloud Run service
+	@echo "Updating autoscaling rules for $(SERVICE_NAME)..."
+	@gcloud run services update $(SERVICE_NAME) \
+		--platform=managed \
+		--region=$(REGION) \
+		--min-instances=1 \
+		--max-instances=10
+	@echo "Autoscaling rules updated successfully."
+
+.PHONY: gcp-clean
+gcp-clean: ## Remove local Docker images
+	@echo "Cleaning up local Docker images..."
+	@docker rmi $(CONTAINER_IMAGE) || true
+
+.PHONY: gcp-logs
+gcp-logs: ## Show logs for the Cloud Run service
+	@echo "Fetching logs for the service..."
+	@gcloud logs read $(SERVICE_NAME) --region=$(REGION) --project=$(PROJECT_ID) --limit=50
