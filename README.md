@@ -27,6 +27,8 @@ The *frontend* is a simple SPA application built with React.
 
 There's a *JavaScript SDK* for easily integrating the session client with any website.
 
+![Architecture Overview](architecture.png "Architecture")
+
 ## Session
 
 *Session* is the basic concept that is used to integrate with the banks. The frontend client will create and start a session. The backend will asynchronously run this session with the selected bank in the background. Input is provided to the session by the client when requested by the integration. State updates is polled from the backend by the frontend client. When a session is completed or failed, the integrating website is notified by the sdk client and the client window is closed.
