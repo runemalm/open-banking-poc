@@ -29,19 +29,19 @@ There's a *JavaScript SDK* for easily integrating the session client with any we
 
 ## Data Flow
 
-The client drives session domain logic via http calls to the sessions backend. The backend utilizes bank integration subclasses to adapt the session to a particular communication technology.
+The client drives session domain logic via http calls to the sessions backend. The backend utilizes bank integration subclasses to adapt the session to a particular bank and communication technology.
 
 <img src="data-flow.png" alt="Data Flow Overview" width="630"/>
 
 ## Basic Entities
 
-The basic entities are the Integration, Bank and Session.
+These are the basic entities:
 
 **Session** represents the session a PSU (user) has with selected bank to perform an AIS/PIS service session.
 
 **Bank** represents a bank in a country.
 
-**Integration** represents an integration with a bank using a specific bank technology/method to integrate.
+**Integration** represents a bank integration.
 
 ![Entities](entities.png "Entities")
 
