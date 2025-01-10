@@ -36,7 +36,9 @@ There's a *JavaScript SDK* for easily integrating the session client with any we
 The basic entities are the Integration, Bank and Session.
 
 **Session** represents the session a PSU (user) has with selected bank to perform an AIS/PIS service session.
+
 **Bank** represents a bank in a country.
+
 **Integration** represents an integration with a bank using a specific bank technology/method to integrate.
 
 ![Entities](entities.png "Entities")
