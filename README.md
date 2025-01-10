@@ -29,7 +29,9 @@ There's a *JavaScript SDK* for easily integrating the session client with any we
 
 ## Data Flow
 
-The client drives session domain logic via http calls to the sessions backend. The backend utilizes bank integration subclasses to adapt the session to a particular bank and communication technology.
+The figure below illustrates the data flow.
+
+The client is a website that uses the JS SDK to open a client widget. This client will make requests to the "Sessions" backend to drive a user session with a bank. The session in turn uses the selected integration to talk to the selected bank using the selected integration type.
 
 <img src="data-flow.png" alt="Data Flow Overview" width="630"/>
 
