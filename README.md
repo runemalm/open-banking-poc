@@ -29,6 +29,8 @@ There's a *JavaScript SDK* for easily integrating the session client with any we
 
 ## Data Flow
 
+The client drives session domain logic via http calls to the sessions backend. The backend utilizes bank integration subclasses to adapt the session to a particular communication technology.
+
 <img src="data-flow.png" alt="Data Flow Overview" width="630"/>
 
 ## Entities
