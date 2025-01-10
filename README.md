@@ -49,7 +49,7 @@ These are the basic entities:
 
 ## State Machine
 
-The session is defined and implemented as a state machine. The backend uses the *Stateless* nuget to implement the state machine. The frontend client views maps directly to states of the state machine. Each bank integration subclass implements relevant state entry actions in it's subclass methods.
+The session is defined and implemented as a state machine. The backend implements states, signals and transiations on the *Session* entity class. The frontend client maps it's views directly to session states. Each bank integration implements relevant state entry actions to make the necessary communication with the bank.
 
 ## Frontend
 
