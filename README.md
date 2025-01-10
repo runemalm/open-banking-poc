@@ -19,7 +19,7 @@ Reach out using the contact details on my portfolio page if you are interested i
 
 Check out the demo by authorizing against your own bank or a mock bank (no credentials required for the latter) at the [demo page](https://davidrunemalm.com/open-banking-demo).
 
-## Architecture
+## Architecture Overview
 
 There's a simple monolith *backend*, which exposes an api for the frontend client to drive bank integration session.
 
@@ -33,7 +33,7 @@ The client drives session domain logic via http calls to the sessions backend. T
 
 <img src="data-flow.png" alt="Data Flow Overview" width="630"/>
 
-## Entities
+## Basic Entities
 
 The basic entities are the Integration, Bank and Session.
 
@@ -63,6 +63,6 @@ The backend is written using C# and .NET8. It's a monolith with a simple HTTP AP
 
 For future scaling, instead of running these jobs with Hangfire they could be run in separate distributed services, or even cloud functions.
 
-## Bank Integration
+## Bank Integrations
 
 Each bank integration is implemented in a subclass of the *StateMachineBase* class. Thus, a new bank integration is as simple to add as adding one of these subclasses. You can see an example of a bank integration in the [SeSeb01](https://github.com/runemalm/open-banking-poc/blob/master/Backend/src/Sessions/Infrastructure/Integrations/Se/Seb/SeSeb01.cs) class.
