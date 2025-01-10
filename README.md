@@ -19,7 +19,7 @@ Reach out using the contact details on my portfolio page if you are interested i
 
 Check out the demo by authorizing against your own bank or a mock bank (no credentials required for the latter) at the [demo page](https://davidrunemalm.com/open-banking-demo).
 
-## Architecture Overview
+## Architecture
 
 There's a simple monolith *backend*, which exposes an api for the frontend client to drive bank integration session.
 
@@ -35,7 +35,7 @@ The client is a website that uses the JS SDK to open a client widget. This clien
 
 <img src="data-flow.png" alt="Data Flow Overview" width="630"/>
 
-## Basic Entities
+## Entities
 
 These are the basic entities:
 
