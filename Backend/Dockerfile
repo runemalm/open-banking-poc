@@ -22,3 +22,14 @@ COPY src/ ./
 
 # Build the application
 RUN dotnet publish -c Release -o /app/publish
+
+# Final runtime image
+FROM base AS final
+WORKDIR /app
+COPY --from=build /app/publish .
+
+# Debugging: List files in the /app directory
+RUN ls -la /app
+
+# Run the application
+ENTRYPOINT ["dotnet", "Sessions.dll"]
