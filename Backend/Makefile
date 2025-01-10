@@ -217,14 +217,28 @@ gcp-push: ## Push the Docker image to Google Artifact Registry
 	@docker push $(CONTAINER_IMAGE)
 
 .PHONY: gcp-deploy
-gcp-deploy: gcp-push ## Deploy the backend to Google Cloud Run
+gcp-deploy: ## Deploy the backend to Google Cloud Run
 	@echo "Deploying to Google Cloud Run..."
 	@gcloud run deploy $(SERVICE_NAME) \
 		--image=$(CONTAINER_IMAGE) \
 		--platform=managed \
 		--region=$(REGION) \
-		--allow-unauthenticated
+		--allow-unauthenticated \
+		--memory=2Gi
 	@echo "Deployment successful!"
+
+.PHONY: gcp-metrics
+gcp-metrics: ## Fetch status and conditions of the Cloud Run service
+	@echo "Fetching metrics for Cloud Run service: $(SERVICE_NAME)..."
+	@gcloud run services describe $(SERVICE_NAME) \
+		--platform=managed \
+		--region=$(REGION) \
+		--format="value(status.conditions)"
+
+.PHONY: gcp-logs
+gcp-logs: ## Stream real-time logs for the Cloud Run service
+	@echo "Streaming logs for Cloud Run service: $(SERVICE_NAME)..."
+	@gcloud beta run services logs tail $(SERVICE_NAME) --region $(REGION)
 
 .PHONY: gcp-get-url
 gcp-get-url: ## Get the static URL of the deployed Cloud Run backend
@@ -248,8 +262,3 @@ gcp-autoscale: ## Update autoscaling rules for the Cloud Run service
 gcp-clean: ## Remove local Docker images
 	@echo "Cleaning up local Docker images..."
 	@docker rmi $(CONTAINER_IMAGE) || true
-
-.PHONY: gcp-logs
-gcp-logs: ## Show logs for the Cloud Run service
-	@echo "Fetching logs for the service..."
-	@gcloud logs read $(SERVICE_NAME) --region=$(REGION) --project=$(PROJECT_ID) --limit=50
