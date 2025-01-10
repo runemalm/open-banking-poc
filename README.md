@@ -49,7 +49,7 @@ These are the basic entities:
 
 ## State Machine
 
-The state machine defines the states and transitions of each session. It's represented in the Session.cs class (backend), the ui flow (frontend) and each bank integration subclass, as state entry actions for authenticate, get transaction history, etc.
+The session is defined and implemented as a state machine. The backend uses the *Stateless* nuget to implement the state machine. The frontend client views maps directly to states of the state machine. Each bank integration subclass implements relevant state entry actions in it's subclass methods.
 
 ## Frontend
 
