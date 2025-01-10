@@ -63,6 +63,8 @@ The backend is written using C# and .NET8. It's a monolith with a simple HTTP AP
 
 For future scaling, instead of running these jobs with Hangfire they could be run in separate distributed services, or even cloud functions.
 
+You may find the [swagger API here](https://sessions-backend-102101218198.europe-north1.run.app/swagger/index.html).
+
 ## Bank Integrations
 
 Each bank integration is implemented in a subclass of the *StateMachineBase* class. Thus, a new bank integration is as simple to add as adding one of these subclasses. You can see an example of a bank integration in the [SeSeb01](https://github.com/runemalm/open-banking-poc/blob/master/Backend/src/Sessions/Infrastructure/Integrations/Se/Seb/SeSeb01.cs) class.
