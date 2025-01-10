@@ -31,7 +31,7 @@ There's a *JavaScript SDK* for easily integrating the session client with any we
 
 The figure below illustrates the data flow.
 
-The client is a website that uses the JS SDK to open a client widget. This client will make requests to the "Sessions" backend to drive a user session with a bank. The session in turn uses the selected integration to talk to the selected bank using the selected integration type.
+The client is a website that uses the JS SDK to open a client widget. This client will make requests to the **Sessions** backend to drive a user session with a bank. The session backend uses an **integration** subclass to talk to the bank.
 
 <img src="data-flow.png" alt="Data Flow Overview" width="630"/>
 
