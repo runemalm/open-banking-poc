@@ -27,7 +27,7 @@ The *frontend* is a simple SPA application built with React.
 
 There's a *JavaScript SDK* for easily integrating the session client with any website.
 
-![Architecture Overview](architecture.png "Architecture")
+![Architecture](architecture.png "Architecture")
 
 ## Session
 
@@ -42,6 +42,8 @@ The state machine defines the states and transitions of each session. It's repre
 The frontend is a JavaScript client SDK built using React and ready to drop-in for easy website integration.
 
 Check out the [demo page](https://davidrunemalm.com/open-banking-demo) for code example on how to use the SDK.
+
+![UI](ui.png "UI")
 
 ## Backend
 
