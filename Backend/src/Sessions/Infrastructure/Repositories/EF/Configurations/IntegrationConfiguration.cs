@@ -1,8 +1,8 @@
 ﻿using DDD.Infrastructure.Repositories.EF.Configurations;
-using Demo.Domain.Model.Integration;
+using Sessions.Domain.Model.Integration;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Demo.Infrastructure.Repositories.EF.Configurations
+namespace Sessions.Infrastructure.Repositories.EF.Configurations
 {
     public class IntegrationConfiguration : EfAggregateRootConfigurationBase<Integration, Guid>
     {

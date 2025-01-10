@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using DDD.Infrastructure.Repositories.EF.Configurations;
-using Demo.Domain.Model;
+using Sessions.Domain.Model;
 
-namespace Demo.Infrastructure.Repositories.EF.Configurations
+namespace Sessions.Infrastructure.Repositories.EF.Configurations
 {
     public class SessionConfiguration : EfAggregateRootConfigurationBase<Session, Guid>
     {

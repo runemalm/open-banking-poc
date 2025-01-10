@@ -1,6 +1,6 @@
 ﻿using DDD.Application;
 
-namespace Demo.Application.Actions.SelectIntegration
+namespace Sessions.Application.Actions.SelectIntegration
 {
     public class SelectIntegrationCommand : ICommand
     {

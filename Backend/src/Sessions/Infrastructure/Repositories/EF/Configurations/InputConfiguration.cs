@@ -1,9 +1,9 @@
 ﻿using DDD.Infrastructure.Repositories.EF.Configurations;
-using Demo.Domain.Model.Input;
+using Sessions.Domain.Model.Input;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Demo.Infrastructure.Repositories.EF.Configurations
+namespace Sessions.Infrastructure.Repositories.EF.Configurations
 {
     public class InputConfiguration : EfAggregateRootConfigurationBase<Input, Guid>
     {

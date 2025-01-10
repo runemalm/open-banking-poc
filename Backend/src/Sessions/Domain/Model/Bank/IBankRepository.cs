@@ -1,6 +1,6 @@
 ﻿using DDD.Domain.Model;
 
-namespace Demo.Domain.Model.Bank
+namespace Sessions.Domain.Model.Bank
 {
 	public interface IBankRepository : IRepository<Bank, Guid>
 	{

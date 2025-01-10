@@ -1,8 +1,8 @@
 ﻿using DDD.Domain.Model;
-using Demo.Domain.Model.Input;
-using Demo.Domain.Model.StateMachine;
+using Sessions.Domain.Model.Input;
+using Sessions.Domain.Model.StateMachine;
 
-namespace Demo.Domain.Model
+namespace Sessions.Domain.Model
 {
     public class Session : AggregateRootBase<Guid>
     {

@@ -1,6 +1,6 @@
 ﻿using DDD.Application;
 
-namespace Demo.Application.Actions.GetIntegrations
+namespace Sessions.Application.Actions.GetIntegrations
 {
     public class GetIntegrationsCommand : ICommand
     {

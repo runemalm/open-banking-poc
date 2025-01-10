@@ -4,14 +4,14 @@
     "/Users/david/Projects/open-banking-poc/Backend/src/Sessions/Sessions.csproj": {}
   },
   "projects": {
-    "/Users/david/Projects/DDD.NET/src/DDD/DDD.csproj": {
+    "/Users/david/Projects/open-banking-poc/Backend/src/DDD/DDD.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/david/Projects/DDD.NET/src/DDD/DDD.csproj",
+        "projectUniqueName": "/Users/david/Projects/open-banking-poc/Backend/src/DDD/DDD.csproj",
         "projectName": "DDD",
-        "projectPath": "/Users/david/Projects/DDD.NET/src/DDD/DDD.csproj",
+        "projectPath": "/Users/david/Projects/open-banking-poc/Backend/src/DDD/DDD.csproj",
         "packagesPath": "/Users/david/.nuget/packages/",
-        "outputPath": "/Users/david/Projects/DDD.NET/src/DDD/obj/",
+        "outputPath": "/Users/david/Projects/open-banking-poc/Backend/src/DDD/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/david/.nuget/NuGet/NuGet.Config"
@@ -100,8 +100,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/david/Projects/DDD.NET/src/DDD/DDD.csproj": {
-                "projectPath": "/Users/david/Projects/DDD.NET/src/DDD/DDD.csproj"
+              "/Users/david/Projects/open-banking-poc/Backend/src/DDD/DDD.csproj": {
+                "projectPath": "/Users/david/Projects/open-banking-poc/Backend/src/DDD/DDD.csproj"
               }
             }
           }
@@ -129,6 +129,10 @@
               "target": "Package",
               "version": "[1.8.17, )"
             },
+            "Hangfire.MemoryStorage": {
+              "target": "Package",
+              "version": "[1.8.1.1, )"
+            },
             "Hangfire.PostgreSql": {
               "target": "Package",
               "version": "[1.20.10, )"
@@ -144,6 +148,10 @@
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
               "target": "Package",
               "version": "[9.0.0, )"
             },

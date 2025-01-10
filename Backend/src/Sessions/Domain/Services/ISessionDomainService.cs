@@ -1,7 +1,7 @@
-﻿using Demo.Domain.Model;
-using Demo.Domain.Model.Input;
+﻿using Sessions.Domain.Model;
+using Sessions.Domain.Model.Input;
 
-namespace Demo.Domain.Services
+namespace Sessions.Domain.Services
 {
 	public interface ISessionDomainService
 	{

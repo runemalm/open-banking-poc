@@ -1,8 +1,8 @@
 ﻿using DDD.Application;
-using Demo.Domain.Model;
-using Demo.Domain.Services;
+using Sessions.Domain.Model;
+using Sessions.Domain.Services;
 
-namespace Demo.Application.Actions.StartSession
+namespace Sessions.Application.Actions.StartSession
 {
     public class StartSessionAction : IAction<StartSessionCommand, Session>
     {

@@ -3,30 +3,36 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Hangfire;
 using Hangfire.PostgreSql;
-using Demo.Application.Actions.CreateSession;
-using Demo.Application.Actions.GetBanks;
-using Demo.Application.Actions.GetIntegrations;
-using Demo.Application.Actions.GetSession;
-using Demo.Application.Actions.GetState;
-using Demo.Application.Actions.ProvideInput;
-using Demo.Application.Actions.SelectBank;
-using Demo.Application.Actions.SelectIntegration;
-using Demo.Application.Actions.StartSession;
-using Demo.Domain.Model;
-using Demo.Domain.Model.Bank;
-using Demo.Domain.Model.Input;
-using Demo.Domain.Model.Integration;
-using Demo.Domain.Model.StateMachine.Factory;
-using Demo.Domain.Services;
-using Demo.Infrastructure.Integrations.Se.Klarna;
-using Demo.Infrastructure.Integrations.Se.Seb;
-using Demo.Infrastructure.Integrations.Se.Swedbank;
-using Demo.Infrastructure.Repositories.EF;
-using Demo.Infrastructure.Repositories.EF.Configurations;
-using Demo.Infrastructure.Repositories.EF.Context;
-using Demo.Infrastructure.Repositories.EF.Seeders;
+using Sessions.Application.Actions.CreateSession;
+using Sessions.Application.Actions.GetBanks;
+using Sessions.Application.Actions.GetIntegrations;
+using Sessions.Application.Actions.GetSession;
+using Sessions.Application.Actions.GetState;
+using Sessions.Application.Actions.ProvideInput;
+using Sessions.Application.Actions.SelectBank;
+using Sessions.Application.Actions.SelectIntegration;
+using Sessions.Application.Actions.StartSession;
+using Sessions.Domain.Model;
+using Sessions.Domain.Model.Bank;
+using Sessions.Domain.Model.Input;
+using Sessions.Domain.Model.Integration;
+using Sessions.Domain.Model.StateMachine.Factory;
+using Sessions.Domain.Services;
+using Sessions.Infrastructure.Integrations.Se.Klarna;
+using Sessions.Infrastructure.Integrations.Se.Seb;
+using Sessions.Infrastructure.Integrations.Se.Swedbank;
+using Sessions.Infrastructure.Repositories.EF;
+using Sessions.Infrastructure.Repositories.EF.Configurations;
+using Sessions.Infrastructure.Repositories.EF.Context;
+using Sessions.Infrastructure.Repositories.EF.Seeders;
+using Hangfire.MemoryStorage;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add appsettings and environment variables
+builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
+    .AddEnvironmentVariables();
 
 // Configure dependencies
 builder.Services.AddEndpointsApiExplorer();
@@ -48,7 +54,15 @@ builder.Services.AddSwaggerGen(c =>
 // Hangfire configuration
 builder.Services.AddHangfire(config =>
 {
-    config.UsePostgreSqlStorage(builder.Configuration.GetConnectionString("DefaultConnection"));
+    if (builder.Environment.IsDevelopment())
+    {
+        config.UsePostgreSqlStorage(builder.Configuration.GetConnectionString("DefaultConnection"));
+    }
+    else
+    {
+        config.UseMemoryStorage();
+    }
+    
     GlobalJobFilters.Filters.Add(new AutomaticRetryAttribute { Attempts = 0 });
 });
 builder.Services.AddHangfireServer();
@@ -73,8 +87,18 @@ builder.Services.AddControllers()
     });
 
 // Add repositories
-builder.Services.AddDbContext<SessionDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+if (builder.Environment.IsDevelopment())
+{
+    Console.WriteLine("Using PostgreSQL Database...");
+    builder.Services.AddDbContext<SessionDbContext>(options =>
+        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+}
+else
+{
+    Console.WriteLine("Using In-Memory Database...");
+    builder.Services.AddDbContext<SessionDbContext>(options =>
+        options.UseInMemoryDatabase("InMemoryDb"));
+}
 
 EfDbContextConfiguration.AdditionalAssemblies.Add(typeof(SessionConfiguration).Assembly);
 
@@ -116,17 +140,14 @@ var app = builder.Build();
 await DatabaseSeeder.SeedAsync(app.Services);
 
 // Configure the HTTP request pipeline
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI();
+
+// Enable Hangfire Dashboard
+app.UseHangfireDashboard("/hangfire", new DashboardOptions
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-    
-    // Enable Hangfire Dashboard
-    app.UseHangfireDashboard("/hangfire", new DashboardOptions
-    {
-        Authorization = new[] { new Hangfire.Dashboard.LocalRequestsOnlyAuthorizationFilter() } // Optional security
-    });
-}
+    Authorization = new[] { new Hangfire.Dashboard.LocalRequestsOnlyAuthorizationFilter() } // Optional security
+});
 
 app.UseHttpsRedirection();
 

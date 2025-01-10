@@ -1,8 +1,8 @@
 ﻿using DDD.Infrastructure.Repositories.EF;
-using Demo.Domain.Model.Bank;
-using Demo.Infrastructure.Repositories.EF.Context;
+using Sessions.Domain.Model.Bank;
+using Sessions.Infrastructure.Repositories.EF.Context;
 
-namespace Demo.Infrastructure.Repositories.EF
+namespace Sessions.Infrastructure.Repositories.EF
 {
     public class EfBankRepository : EfRepositoryBase<Bank, Guid, SessionDbContext>, IBankRepository
     {

@@ -1,12 +1,12 @@
 ﻿using DDD.Application;
-using Demo.Application.Actions.StartSession;
-using Demo.Domain.Model;
-using Demo.Domain.Model.Input;
-using Demo.Domain.Services;
+using Sessions.Application.Actions.StartSession;
+using Sessions.Domain.Model;
+using Sessions.Domain.Model.Input;
+using Sessions.Domain.Services;
 using Hangfire;
 using MediatR;
 
-namespace Demo.Application.Actions.CreateSession
+namespace Sessions.Application.Actions.CreateSession
 {
     public class CreateSessionAction : IAction<CreateSessionCommand, (Session, Domain.Model.Input.Input)>
     {

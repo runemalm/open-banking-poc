@@ -1,6 +1,6 @@
 ﻿using DDD.Application;
 
-namespace Demo.Application.Actions.GetState
+namespace Sessions.Application.Actions.GetState
 {
     public class GetStateCommand : ICommand
     {

@@ -1,6 +1,6 @@
 ﻿using DDD.Domain.Model;
 
-namespace Demo.Domain.Model.Integration
+namespace Sessions.Domain.Model.Integration
 {
 	public interface IIntegrationRepository : IRepository<Integration, Guid>
 	{

@@ -1,6 +1,6 @@
 ﻿using DDD.Application;
 
-namespace Demo.Application.Actions.SelectBank
+namespace Sessions.Application.Actions.SelectBank
 {
     public class SelectBankCommand : ICommand
     {

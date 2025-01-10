@@ -1,11 +1,11 @@
 using System.Text.Json;
 using PuppeteerSharp;
-using Demo.Domain.Model;
-using Demo.Domain.Model.Input;
-using Demo.Domain.Model.StateMachine;
-using Demo.Domain.Model.User;
+using Sessions.Domain.Model;
+using Sessions.Domain.Model.Input;
+using Sessions.Domain.Model.StateMachine;
+using Sessions.Domain.Model.User;
 
-namespace Demo.Infrastructure.Integrations.Se.Klarna
+namespace Sessions.Infrastructure.Integrations.Se.Klarna
 {
     public class SeKlarna01 : StateMachineBase
     {

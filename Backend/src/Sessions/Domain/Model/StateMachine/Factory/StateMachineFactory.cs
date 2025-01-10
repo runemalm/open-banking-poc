@@ -1,8 +1,8 @@
-﻿using Demo.Infrastructure.Integrations.Se.Klarna;
-using Demo.Infrastructure.Integrations.Se.Seb;
-using Demo.Infrastructure.Integrations.Se.Swedbank;
+﻿using Sessions.Infrastructure.Integrations.Se.Klarna;
+using Sessions.Infrastructure.Integrations.Se.Seb;
+using Sessions.Infrastructure.Integrations.Se.Swedbank;
 
-namespace Demo.Domain.Model.StateMachine.Factory
+namespace Sessions.Domain.Model.StateMachine.Factory
 {
     public class StateMachineFactory : IStateMachineFactory
     {

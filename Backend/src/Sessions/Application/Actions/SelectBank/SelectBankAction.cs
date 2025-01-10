@@ -1,8 +1,8 @@
 ﻿using DDD.Application;
-using Demo.Domain.Model;
-using Demo.Domain.Services;
+using Sessions.Domain.Model;
+using Sessions.Domain.Services;
 
-namespace Demo.Application.Actions.SelectBank
+namespace Sessions.Application.Actions.SelectBank
 {
     public class SelectBankAction : IAction<SelectBankCommand, Session>
     {

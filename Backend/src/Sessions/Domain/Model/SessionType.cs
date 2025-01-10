@@ -1,4 +1,4 @@
-﻿namespace Demo.Domain.Model
+﻿namespace Sessions.Domain.Model
 {
     public enum SessionType
     {

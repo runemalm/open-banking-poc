@@ -1,7 +1,7 @@
 ﻿// using System.Text.Json;
-// using Demo.Domain.Model;
+// using Sessions.Domain.Model;
 //
-// namespace Demo.Infrastructure.Serialization
+// namespace Sessions.Infrastructure.Serialization
 // {
 //     public static class TransactionHistorySerializer
 //     {

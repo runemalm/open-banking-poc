@@ -1,7 +1,7 @@
 ﻿using DDD.Application;
-using Demo.Domain.Model.Bank;
+using Sessions.Domain.Model.Bank;
 
-namespace Demo.Application.Actions.GetBanks
+namespace Sessions.Application.Actions.GetBanks
 {
     public class GetBanksAction : IAction<GetBanksCommand, List<Bank>>
     {

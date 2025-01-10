@@ -1,7 +1,7 @@
 ﻿using DDD.Application;
-using Demo.Domain.Model;
+using Sessions.Domain.Model;
 
-namespace Demo.Application.Actions.GetSession
+namespace Sessions.Application.Actions.GetSession
 {
     public class GetSessionAction : IAction<GetSessionCommand, Session>
     {

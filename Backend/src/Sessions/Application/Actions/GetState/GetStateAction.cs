@@ -1,8 +1,8 @@
 ﻿using DDD.Application;
-using Demo.Domain.Model;
-using Demo.Domain.Services;
+using Sessions.Domain.Model;
+using Sessions.Domain.Services;
 
-namespace Demo.Application.Actions.GetState
+namespace Sessions.Application.Actions.GetState
 {
     public class GetStateAction : IAction<GetStateCommand, (State, Domain.Model.Input.Input)>
     {

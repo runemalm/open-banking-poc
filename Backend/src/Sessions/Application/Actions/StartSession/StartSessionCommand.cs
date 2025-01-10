@@ -1,6 +1,6 @@
 ﻿using DDD.Application;
 
-namespace Demo.Application.Actions.StartSession
+namespace Sessions.Application.Actions.StartSession
 {
     public class StartSessionCommand : ICommand
     {

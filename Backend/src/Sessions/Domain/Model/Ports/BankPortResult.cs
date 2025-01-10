@@ -1,6 +1,6 @@
 ﻿using DDD.Domain.Model;
 
-namespace Demo.Domain.Model.Ports
+namespace Sessions.Domain.Model.Ports
 {
     public class BankPortResult<T> : IValueObject
     {

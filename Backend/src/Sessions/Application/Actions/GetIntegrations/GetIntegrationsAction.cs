@@ -1,7 +1,7 @@
 ﻿using DDD.Application;
-using Demo.Domain.Model.Integration;
+using Sessions.Domain.Model.Integration;
 
-namespace Demo.Application.Actions.GetIntegrations
+namespace Sessions.Application.Actions.GetIntegrations
 {
     public class GetIntegrationsAction : IAction<GetIntegrationsCommand, List<Integration>>
     {

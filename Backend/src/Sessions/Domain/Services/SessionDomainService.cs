@@ -1,8 +1,8 @@
-﻿using Demo.Domain.Model;
-using Demo.Domain.Model.Input;
-using Demo.Domain.Model.StateMachine.Factory;
+﻿using Sessions.Domain.Model;
+using Sessions.Domain.Model.Input;
+using Sessions.Domain.Model.StateMachine.Factory;
 
-namespace Demo.Domain.Services
+namespace Sessions.Domain.Services
 {
     public class SessionDomainService : ISessionDomainService
     {

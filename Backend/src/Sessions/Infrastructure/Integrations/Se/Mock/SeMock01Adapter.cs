@@ -1,10 +1,10 @@
-// using Demo.Domain.Model;
-// using Demo.Domain.Model.BankAccounts;
-// using Demo.Domain.Model.Input;
-// using Demo.Domain.Model.Ports;
-// using Demo.Domain.Model.User;
+// using Sessions.Domain.Model;
+// using Sessions.Domain.Model.BankAccounts;
+// using Sessions.Domain.Model.Input;
+// using Sessions.Domain.Model.Ports;
+// using Sessions.Domain.Model.User;
 //
-// namespace Demo.Infrastructure.BankAdapters.Se.Mock
+// namespace Sessions.Infrastructure.BankAdapters.Se.Mock
 // {
 //     public class SeMock01Adapter : BankAdapterBase, ISeMock01Adapter
 //     {

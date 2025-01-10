@@ -1,6 +1,6 @@
 ﻿using DDD.Application;
 
-namespace Demo.Application.Actions.ProvideInput
+namespace Sessions.Application.Actions.ProvideInput
 {
     public class ProvideInputCommand : ICommand
     {

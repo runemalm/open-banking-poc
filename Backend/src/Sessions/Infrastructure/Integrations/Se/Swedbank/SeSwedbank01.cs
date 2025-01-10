@@ -1,10 +1,10 @@
-using Demo.Domain.Model;
-using Demo.Domain.Model.Input;
-using Demo.Domain.Model.StateMachine;
-using Demo.Domain.Model.User;
+using Sessions.Domain.Model;
+using Sessions.Domain.Model.Input;
+using Sessions.Domain.Model.StateMachine;
+using Sessions.Domain.Model.User;
 using PuppeteerSharp;
 
-namespace Demo.Infrastructure.Integrations.Se.Swedbank
+namespace Sessions.Infrastructure.Integrations.Se.Swedbank
 {
     public class SeSwedbank01 : StateMachineBase
     {

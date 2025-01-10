@@ -1,6 +1,6 @@
 ﻿using DDD.Application;
 
-namespace Demo.Application.Actions.GetSession
+namespace Sessions.Application.Actions.GetSession
 {
     public class GetSessionCommand : ICommand
     {

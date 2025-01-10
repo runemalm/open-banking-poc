@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Demo.Domain.Model;
-using Demo.Domain.Model.Bank;
-using Demo.Domain.Model.Integration;
-using Demo.Infrastructure.Repositories.EF.Context;
+using Sessions.Domain.Model;
+using Sessions.Domain.Model.Bank;
+using Sessions.Domain.Model.Integration;
+using Sessions.Infrastructure.Repositories.EF.Context;
 
-namespace Demo.Infrastructure.Repositories.EF.Seeders
+namespace Sessions.Infrastructure.Repositories.EF.Seeders
 {
     public static class DatabaseSeeder
     {

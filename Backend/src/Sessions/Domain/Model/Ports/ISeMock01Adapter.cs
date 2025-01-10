@@ -1,4 +1,4 @@
-﻿namespace Demo.Domain.Model.Ports
+﻿namespace Sessions.Domain.Model.Ports
 {
     public interface ISeMock01Adapter: IBankPort
     {

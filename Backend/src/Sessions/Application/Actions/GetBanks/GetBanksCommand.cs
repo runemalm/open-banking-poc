@@ -1,6 +1,6 @@
 ﻿using DDD.Application;
 
-namespace Demo.Application.Actions.GetBanks
+namespace Sessions.Application.Actions.GetBanks
 {
     public class GetBanksCommand : ICommand
     {

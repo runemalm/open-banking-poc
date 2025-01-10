@@ -1,8 +1,8 @@
 ﻿// using System.Text.Json;
-// using Demo.Domain.Model;
-// using Demo.Domain.Model.BankAccounts;
+// using Sessions.Domain.Model;
+// using Sessions.Domain.Model.BankAccounts;
 //
-// namespace Demo.Infrastructure.Serialization
+// namespace Sessions.Infrastructure.Serialization
 // {
 //     public static class BankAccountsSerializer
 //     {

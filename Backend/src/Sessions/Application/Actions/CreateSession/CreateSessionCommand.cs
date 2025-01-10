@@ -1,7 +1,7 @@
 ﻿using DDD.Application;
-using Demo.Domain.Model;
+using Sessions.Domain.Model;
 
-namespace Demo.Application.Actions.CreateSession
+namespace Sessions.Application.Actions.CreateSession
 {
     public class CreateSessionCommand : ICommand
     {

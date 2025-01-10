@@ -1,9 +1,9 @@
 ﻿using DDD.Application;
-using Demo.Domain.Model;
-using Demo.Domain.Model.Input;
-using Demo.Domain.Services;
+using Sessions.Domain.Model;
+using Sessions.Domain.Model.Input;
+using Sessions.Domain.Services;
 
-namespace Demo.Application.Actions.ProvideInput
+namespace Sessions.Application.Actions.ProvideInput
 {
     public class ProvideInputAction : IAction<ProvideInputCommand, bool>
     {

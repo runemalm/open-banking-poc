@@ -1,13 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
-using Demo.Application.Actions.CreateSession;
-using Demo.Application.Actions.GetBanks;
-using Demo.Application.Actions.GetIntegrations;
-using Demo.Application.Actions.GetSession;
-using Demo.Application.Actions.GetState;
-using Demo.Application.Actions.ProvideInput;
-using Demo.Application.Actions.SelectBank;
-using Demo.Application.Actions.SelectIntegration;
-using Demo.Application.Actions.StartSession;
+using Sessions.Application.Actions.CreateSession;
+using Sessions.Application.Actions.GetBanks;
+using Sessions.Application.Actions.GetIntegrations;
+using Sessions.Application.Actions.GetSession;
+using Sessions.Application.Actions.GetState;
+using Sessions.Application.Actions.ProvideInput;
+using Sessions.Application.Actions.SelectBank;
+using Sessions.Application.Actions.SelectIntegration;
+using Sessions.Application.Actions.StartSession;
 
 namespace Demo
 {

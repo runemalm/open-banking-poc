@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using DDD.Infrastructure.Repositories.EF.Context;
-using Demo.Domain.Model;
-using Demo.Domain.Model.Bank;
-using Demo.Domain.Model.Input;
-using Demo.Domain.Model.Integration;
+using Sessions.Domain.Model;
+using Sessions.Domain.Model.Bank;
+using Sessions.Domain.Model.Input;
+using Sessions.Domain.Model.Integration;
 
-namespace Demo.Infrastructure.Repositories.EF.Context
+namespace Sessions.Infrastructure.Repositories.EF.Context
 {
     public class SessionDbContext : EfDbContextBase, ISessionDbContext
     {

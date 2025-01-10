@@ -1,6 +1,6 @@
 ﻿using DDD.Domain.Model;
 
-namespace Demo.Domain.Model.User
+namespace Sessions.Domain.Model.User
 {
     public class User : IValueObject
     {

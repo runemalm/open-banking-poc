@@ -1,4 +1,4 @@
-﻿namespace Demo.Domain.Model.StateMachine.Factory
+﻿namespace Sessions.Domain.Model.StateMachine.Factory
 {
     public interface IStateMachineFactory
     {

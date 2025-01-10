@@ -1,4 +1,4 @@
-﻿// namespace Demo.Infrastructure.Serialization
+﻿// namespace Sessions.Infrastructure.Serialization
 // {
 //     public static class BankAccountSerializer
 //     {

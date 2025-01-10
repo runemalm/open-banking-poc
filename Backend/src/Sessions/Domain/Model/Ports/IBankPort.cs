@@ -1,6 +1,6 @@
-﻿using Demo.Domain.Model.Input;
+﻿using Sessions.Domain.Model.Input;
 
-namespace Demo.Domain.Model.Ports
+namespace Sessions.Domain.Model.Ports
 {
     public interface IBankPort
     {

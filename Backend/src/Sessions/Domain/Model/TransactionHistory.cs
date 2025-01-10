@@ -1,6 +1,6 @@
 ﻿using DDD.Domain.Model;
 
-namespace Demo.Domain.Model
+namespace Sessions.Domain.Model
 {
     public class TransactionHistory : IValueObject
     {

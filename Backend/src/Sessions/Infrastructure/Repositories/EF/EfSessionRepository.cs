@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using DDD.Infrastructure.Repositories.EF;
-using Demo.Domain.Model;
-using Demo.Infrastructure.Repositories.EF.Context;
+using Sessions.Domain.Model;
+using Sessions.Infrastructure.Repositories.EF.Context;
 
-namespace Demo.Infrastructure.Repositories.EF
+namespace Sessions.Infrastructure.Repositories.EF
 {
     public class EfSessionRepository : EfRepositoryBase<Session, Guid, SessionDbContext>, ISessionRepository
     {

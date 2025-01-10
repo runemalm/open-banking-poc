@@ -1,7 +1,7 @@
 ﻿// using System.Text.Json;
-// using Demo.Domain.Model.User;
+// using Sessions.Domain.Model.User;
 //
-// namespace Demo.Infrastructure.Serialization
+// namespace Sessions.Infrastructure.Serialization
 // {
 //     public static class UserSerializer
 //     {

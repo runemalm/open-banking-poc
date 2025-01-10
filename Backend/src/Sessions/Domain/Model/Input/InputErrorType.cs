@@ -1,4 +1,4 @@
-﻿namespace Demo.Domain.Model.Input
+﻿namespace Sessions.Domain.Model.Input
 {
     public enum InputErrorType
     {

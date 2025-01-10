@@ -1,7 +1,7 @@
-﻿using Demo.Domain.Model.Input;
+﻿using Sessions.Domain.Model.Input;
 using Stateless;
 
-namespace Demo.Domain.Model.StateMachine
+namespace Sessions.Domain.Model.StateMachine
 {
     public abstract class StateMachineBase
     {

@@ -1,7 +1,7 @@
 ﻿using DDD.Domain.Model;
 using MediatR;
 
-namespace Demo.Domain.Model
+namespace Sessions.Domain.Model
 {
     public class SessionReadyToStart : IDomainEvent, INotification
     {

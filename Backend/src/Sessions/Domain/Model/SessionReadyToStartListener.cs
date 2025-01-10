@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using Demo.Application.Actions.StartSession;
+using Sessions.Application.Actions.StartSession;
 
-namespace Demo.Domain.Model
+namespace Sessions.Domain.Model
 {
     public class SessionReadyToStartListener : INotificationHandler<SessionReadyToStart>
     {

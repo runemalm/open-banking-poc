@@ -1,8 +1,8 @@
 ﻿using DDD.Infrastructure.Repositories.EF.Configurations;
-using Demo.Domain.Model.Bank;
+using Sessions.Domain.Model.Bank;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Demo.Infrastructure.Repositories.EF.Configurations
+namespace Sessions.Infrastructure.Repositories.EF.Configurations
 {
     public class BankConfiguration : EfAggregateRootConfigurationBase<Bank, Guid>
     {

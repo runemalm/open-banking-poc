@@ -1,6 +1,6 @@
 ﻿using DDD.Domain.Model;
 
-namespace Demo.Domain.Model.BankAccounts
+namespace Sessions.Domain.Model.BankAccounts
 {
     public class BankAccounts : IValueObject
     {

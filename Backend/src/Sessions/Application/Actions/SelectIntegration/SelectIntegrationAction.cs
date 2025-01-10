@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using DDD.Application;
-using Demo.Application.Actions.StartSession;
-using Demo.Domain.Model;
-using Demo.Domain.Services;
+using Sessions.Application.Actions.StartSession;
+using Sessions.Domain.Model;
+using Sessions.Domain.Services;
 using Hangfire;
 
-namespace Demo.Application.Actions.SelectIntegration
+namespace Sessions.Application.Actions.SelectIntegration
 {
     public class SelectIntegrationAction : IAction<SelectIntegrationCommand, Session>
     {
