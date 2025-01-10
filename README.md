@@ -33,7 +33,11 @@ There's a *JavaScript SDK* for easily integrating the session client with any we
 
 ## Entities
 
-*Session* is the basic concept that is used to integrate with the banks. The frontend client will create and start a session. The backend will asynchronously run this session with the selected bank in the background. Input is provided to the session by the client when requested by the integration. State updates is polled from the backend by the frontend client. When a session is completed or failed, the integrating website is notified by the sdk client and the client window is closed.
+The basic entities are the Integration, Bank and Session.
+
+**Session** represents the session a PSU (user) has with selected bank to perform an AIS/PIS service session.
+**Bank** represents a bank in a country.
+**Integration** represents an integration with a bank using a specific bank technology/method to integrate.
 
 ![Entities](entities.png "Entities")
 
