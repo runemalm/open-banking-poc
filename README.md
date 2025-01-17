@@ -15,10 +15,6 @@ Reach out using the contact details on my portfolio page if you are interested i
 - ✅ One developer per bank integration.
 - ✅ Javascript SDK for website integration.
 
-## Demo
-
-Check out the demo by authorizing against your own bank or a mock bank (no credentials required for the latter) at the [demo page](https://davidrunemalm.com/open-banking-demo).
-
 ## Architecture
 
 There's a simple monolith *backend*, which exposes an api for the frontend client to drive bank integration session.
@@ -58,8 +54,6 @@ The session is defined and implemented as a state machine.
 ## Frontend
 
 The frontend is a JavaScript client SDK built using React and ready to drop-in for easy website integration.
-
-Check out the [demo page](https://davidrunemalm.com/open-banking-demo) for code example on how to use the SDK.
 
 ![UI](ui.png "UI")
 
