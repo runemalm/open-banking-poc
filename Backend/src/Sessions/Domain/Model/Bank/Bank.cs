@@ -1,4 +1,5 @@
-﻿using DDD.Domain.Model;
+﻿using OpenDDD.Domain.Model;
+using OpenDDD.Domain.Model.Base;
 
 namespace Sessions.Domain.Model.Bank
 {

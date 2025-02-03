@@ -217,7 +217,7 @@ namespace Sessions.Infrastructure.Integrations.Se.Swedbank
                     throw new TimeoutException("NIN input field did not appear within the timeout period.");
 
                 // Request the NIN input
-                await RequestInputAsync(InputRequestType.Nin, new Dictionary<string, string>());
+                await RequestInputAsync(InputRequestType.Nin, RequestParams.Empty());
 
                 // Wait for the input to be provided
                 var ninInput = await WaitForInputAsync();
@@ -351,10 +351,7 @@ namespace Sessions.Infrastructure.Integrations.Se.Swedbank
                             Console.WriteLine("QR code Base64 captured. Requesting scan...");
 
                             // Request input for scanning the QR code
-                            await RequestInputAsync(InputRequestType.Challenge, new Dictionary<string, string>
-                            {
-                                { "qrCodeData", base64ToProcess }
-                            });
+                            await RequestInputAsync(InputRequestType.Challenge, RequestParams.With("qrCodeData", base64ToProcess));
                         }
 
                         await Task.Delay(QrCodeScanIntervalMs);

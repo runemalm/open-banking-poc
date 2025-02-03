@@ -1,4 +1,5 @@
-﻿using DDD.Domain.Model;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using OpenDDD.Domain.Model;
 
 namespace Sessions.Domain.Model.BankAccounts
 {
@@ -6,7 +7,7 @@ namespace Sessions.Domain.Model.BankAccounts
     {
         public string Number { get; set; }
         
-        private BankAccount() { }
+        public BankAccount() { }
         
         public static BankAccount Create(string number)
         {

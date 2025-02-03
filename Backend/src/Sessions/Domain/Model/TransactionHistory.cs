@@ -1,4 +1,4 @@
-﻿using DDD.Domain.Model;
+﻿using OpenDDD.Domain.Model;
 
 namespace Sessions.Domain.Model
 {
@@ -6,7 +6,7 @@ namespace Sessions.Domain.Model
     {
         public List<Transaction> Transactions { get; set; }
 
-        private TransactionHistory() { }
+        public TransactionHistory() { }
 
         public static TransactionHistory Create(List<Transaction> transactions)
         {

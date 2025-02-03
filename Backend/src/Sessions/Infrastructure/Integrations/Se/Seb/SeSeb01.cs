@@ -217,8 +217,7 @@ namespace Sessions.Infrastructure.Integrations.Se.Seb
                         var qrCodeData = await qrCanvas.EvaluateFunctionAsync<string>("canvas => canvas.toDataURL('image/png')");
                         if (!string.IsNullOrEmpty(qrCodeData))
                         {
-                            await RequestInputAsync(InputRequestType.Challenge, 
-                                new Dictionary<string, string> { { "qrCodeData", qrCodeData } });
+                            await RequestInputAsync(InputRequestType.Challenge, RequestParams.With("qrCodeData", qrCodeData));
 
                             Console.WriteLine("QR code scan requested.");
                         }

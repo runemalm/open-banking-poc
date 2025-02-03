@@ -1,20 +1,28 @@
-﻿using MediatR;
+﻿using OpenDDD.API.Options;
+using OpenDDD.Infrastructure.Events;
+using OpenDDD.Infrastructure.Events.Base;
 using Sessions.Application.Actions.StartSession;
 
 namespace Sessions.Domain.Model
 {
-    public class SessionReadyToStartListener : INotificationHandler<SessionReadyToStart>
+    public class SessionReadyToStartListener : EventListenerBase<SessionReadyToStart, StartSessionAction>
     {
-        private readonly StartSessionAction _startSessionAction;
-
-        public SessionReadyToStartListener(StartSessionAction startSessionAction)
-        {
-            _startSessionAction = startSessionAction;
-        }
+        public SessionReadyToStartListener(
+            IMessagingProvider messagingProvider,
+            OpenDddOptions options,
+            IServiceScopeFactory serviceScopeFactory,
+            ILogger<SessionReadyToStartListener> logger)
+            : base(messagingProvider, options, serviceScopeFactory, logger) { }
 
         public async Task Handle(SessionReadyToStart notification, CancellationToken cancellationToken)
         {
-            await _startSessionAction.ExecuteAsync(new StartSessionCommand(notification.SessionId), cancellationToken);
+            
+        }
+
+        public override async Task HandleAsync(SessionReadyToStart @event, StartSessionAction action, CancellationToken ct)
+        {
+            var command = new StartSessionCommand(@event.SessionId);
+            await action.ExecuteAsync(command, ct);
         }
     }
 }

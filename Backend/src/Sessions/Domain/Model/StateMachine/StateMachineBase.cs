@@ -115,13 +115,13 @@ namespace Sessions.Domain.Model.StateMachine
 
         // Helpers
         
-        protected async Task RequestInputAsync(InputRequestType requestType, Dictionary<string, string> data)
+        protected async Task RequestInputAsync(InputRequestType requestType, RequestParams data)
         {
             Session.RaiseInputRequested(requestType, data);
             await Task.CompletedTask;
         }
         
-        protected async Task<Input.Input> WaitForInputAsync()
+        protected async Task<Input.Input> WaitForInputAsync(CancellationToken ct = default)
         {
             const int PollingIntervalMs = 10000;
             const int MaxWaitTimeMs = 30000;
@@ -130,7 +130,7 @@ namespace Sessions.Domain.Model.StateMachine
 
             while (DateTime.UtcNow < timeoutAt)
             {
-                var input = await _inputRepository.GetAsync(Session.Id);
+                var input = await _inputRepository.GetAsync(Session.Id, ct);
 
                 if (input != null && input.Status == InputStatus.Provided && !string.IsNullOrEmpty(input.Value))
                 {
@@ -144,32 +144,32 @@ namespace Sessions.Domain.Model.StateMachine
             throw new TimeoutException("Timed out waiting for the input to be provided.");
         }
         
-        protected async Task SetInputRequestParamAsync(string name, string value)
+        protected async Task SetInputRequestParamAsync(string name, string value, CancellationToken ct = default)
         {
-            var input = await _inputRepository.GetAsync(Session.Id);
+            var input = await _inputRepository.GetAsync(Session.Id, ct);
             input.SetRequestParam(name, value);
             await _inputRepository.SaveAsync(input, CancellationToken.None);
         }
         
-        protected async Task MarkInputProvided()
+        protected async Task MarkInputProvided(CancellationToken ct = default)
         {
-            var input = await _inputRepository.GetAsync(Session.Id);
+            var input = await _inputRepository.GetAsync(Session.Id, ct);
             input.Provide("");
             await _inputRepository.SaveAsync(input, CancellationToken.None);
         }
         
-        protected async Task MarkInputProvidedAsync(string? value = null)
+        protected async Task MarkInputProvidedAsync(string? value = null, CancellationToken ct = default)
         {
-            var input = await _inputRepository.GetAsync(Session.Id);
+            var input = await _inputRepository.GetAsync(Session.Id, ct);
             input.Provide(value ?? "");
             await _inputRepository.SaveAsync(input, CancellationToken.None);
         }
 
-        protected async Task RefreshSessionAsync()
+        protected async Task RefreshSessionAsync(CancellationToken ct = default)
         {
             try
             {
-                Session = await _sessionRepository.GetAsync(Session.Id);
+                Session = await _sessionRepository.GetAsync(Session.Id, ct);
             }
             catch (Exception ex)
             {

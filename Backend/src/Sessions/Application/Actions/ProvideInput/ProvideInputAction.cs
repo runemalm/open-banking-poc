@@ -1,4 +1,4 @@
-﻿using DDD.Application;
+﻿using OpenDDD.Application;
 using Sessions.Domain.Model;
 using Sessions.Domain.Model.Input;
 using Sessions.Domain.Services;
@@ -23,7 +23,7 @@ namespace Sessions.Application.Actions.ProvideInput
 
         public async Task<bool> ExecuteAsync(ProvideInputCommand command, CancellationToken ct)
         {
-            var session = await _sessionRepository.GetAsync(command.SessionId);
+            var session = await _sessionRepository.GetAsync(command.SessionId, ct);
             var input = await _sessionDomainService.ProvideInputAsync(session, command.Value, ct);
             await _inputRepository.SaveAsync(input, ct);
             return true;

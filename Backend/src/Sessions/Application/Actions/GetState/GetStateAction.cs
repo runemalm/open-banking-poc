@@ -1,4 +1,4 @@
-﻿using DDD.Application;
+﻿using OpenDDD.Application;
 using Sessions.Domain.Model;
 using Sessions.Domain.Services;
 

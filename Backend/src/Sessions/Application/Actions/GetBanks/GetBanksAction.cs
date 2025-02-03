@@ -1,4 +1,4 @@
-﻿using DDD.Application;
+﻿using OpenDDD.Application;
 using Sessions.Domain.Model.Bank;
 
 namespace Sessions.Application.Actions.GetBanks
@@ -14,7 +14,7 @@ namespace Sessions.Application.Actions.GetBanks
 
         public async Task<List<Bank>> ExecuteAsync(GetBanksCommand command, CancellationToken ct)
         {
-            var banks = await _bankRepository.FindAllAsync();
+            var banks = await _bankRepository.FindAllAsync(ct);
             return banks.ToList();
         }
     }

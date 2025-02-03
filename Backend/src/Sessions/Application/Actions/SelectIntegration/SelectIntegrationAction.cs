@@ -1,9 +1,9 @@
-﻿using MediatR;
-using DDD.Application;
+﻿using OpenDDD.Application;
+using OpenDDD.Domain.Model;
+using Hangfire;
 using Sessions.Application.Actions.StartSession;
 using Sessions.Domain.Model;
 using Sessions.Domain.Services;
-using Hangfire;
 
 namespace Sessions.Application.Actions.SelectIntegration
 {
@@ -11,21 +11,21 @@ namespace Sessions.Application.Actions.SelectIntegration
     {
         private readonly ISessionRepository _sessionRepository;
         private readonly ISessionDomainService _sessionDomainService;
-        private readonly IMediator _mediator;
+        private readonly IDomainPublisher _domainPublisher;
 
         public SelectIntegrationAction(
             ISessionRepository sessionRepository, 
             ISessionDomainService sessionDomainService,
-            IMediator mediator)
+            IDomainPublisher domainPublisher)
         {
             _sessionRepository = sessionRepository;
             _sessionDomainService = sessionDomainService;
-            _mediator = mediator;
+            _domainPublisher = domainPublisher;
         }
 
         public async Task<Session> ExecuteAsync(SelectIntegrationCommand command, CancellationToken ct)
         {
-            var session = await _sessionRepository.GetAsync(command.SessionId)
+            var session = await _sessionRepository.GetAsync(command.SessionId, ct)
                           ?? throw new InvalidOperationException($"Session {command.SessionId} not found.");
             
             await _sessionDomainService.SelectIntegrationAsync(session, command.IntegrationId, ct);
@@ -34,7 +34,7 @@ namespace Sessions.Application.Actions.SelectIntegration
 
             if (session.State == State.ReadyToStart)
             {
-                // await _mediator.Publish(new SessionReadyToStart(session.Id), ct);
+                // await _domainPublisher.PublishAsync(new SessionReadyToStart(session.Id), ct);
                 
                 BackgroundJob.Enqueue<StartSessionAction>(action =>
                     action.ExecuteAsync(new StartSessionCommand(session.Id), CancellationToken.None));

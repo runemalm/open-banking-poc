@@ -1,4 +1,4 @@
-﻿using DDD.Application;
+﻿using OpenDDD.Application;
 
 namespace Sessions.Application.Actions.GetBanks
 {

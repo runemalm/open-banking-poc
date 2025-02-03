@@ -1,4 +1,4 @@
-﻿using DDD.Domain.Model;
+﻿using OpenDDD.Domain.Model.Base;
 using Sessions.Domain.Model.Input;
 using Sessions.Domain.Model.StateMachine;
 
@@ -22,8 +22,8 @@ namespace Sessions.Domain.Model
         // Events
 
         public event Action<State, State>? OnStateChanged;
-        public event Action<InputRequestType, Dictionary<string, string>>? OnInputRequested;
-        internal void RaiseInputRequested(InputRequestType requestType, Dictionary<string, string> data)
+        public event Action<InputRequestType, RequestParams>? OnInputRequested;
+        internal void RaiseInputRequested(InputRequestType requestType, RequestParams data)
         {
             OnInputRequested?.Invoke(requestType, data);
         }

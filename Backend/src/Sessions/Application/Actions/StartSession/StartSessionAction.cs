@@ -1,4 +1,4 @@
-﻿using DDD.Application;
+﻿using OpenDDD.Application;
 using Sessions.Domain.Model;
 using Sessions.Domain.Services;
 
@@ -17,7 +17,7 @@ namespace Sessions.Application.Actions.StartSession
 
         public async Task<Session> ExecuteAsync(StartSessionCommand command, CancellationToken ct)
         {
-            await _sessionRepository.GetAsync(command.SessionId);
+            await _sessionRepository.GetAsync(command.SessionId, ct);
             var session = await _sessionDomainService.StartSessionAsync(command.SessionId, ct);
             return session;
         }

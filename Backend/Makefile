@@ -7,9 +7,12 @@
 ##########################################################################
 
 APP := sessions
+
 HOME := $(shell echo ~)
 PWD := $(shell pwd)
 SRC := $(PWD)/src
+TESTS := $(SRC)/src/Sessions/Tests
+MIGRATIONS := $(SRC)/Sessions/Infrastructure/Persistence/EfCore/Migrations
 
 POSTGRES_CONTAINER_NAME := $(APP)-postgres
 POSTGRES_IMAGE := postgres:17.2
@@ -112,25 +115,24 @@ clean: ## Clean the solution
 	find . $(SRC_DIR) -iname "obj" | xargs rm -rf
 
 ##########################################################################
-# EF
+# MIGRATIONS
 ##########################################################################
 
-.PHONY: ef-migration-add
-ef-migration-add: ## Create a new EF Core migration
-	@read -p "Enter migration name: " name && \
-	dotnet ef migrations add $$name \
-	--project $(SRC)/Sessions \
-	--startup-project $(SRC)/Sessions \
-	--output-dir $(SRC)/Sessions/Infrastructure/Repositories/EF/Migrations
+.PHONY: create-migration
+create-migration: ## Create a new migration (uses NAME)
+ifndef NAME
+	$(error Migration name not specified. Usage: make create-migration NAME=<MigrationName>)
+endif
+	DOTNET_ENVIRONMENT=Development \
+	dotnet ef migrations add $(NAME) \
+		--output-dir $(MIGRATIONS) \
+		--project $(SRC)/Sessions
 
-.PHONY: ef-database-update
-ef-database-update: ## Apply EF Core migrations to the database
-	@echo "Applying EF Core migrations..."
-	@dotnet ef database update \
-	--project $(SRC)/Sessions \
-	--startup-project $(SRC)/Sessions \
-	--verbose
-	@echo "Database updated successfully."
+.PHONY: apply-migrations
+apply-migrations: ## Apply all pending migrations to the database
+	DOTNET_ENVIRONMENT=Development \
+	dotnet ef database update \
+		--project $(SRC)/Sessions
 
 ##########################################################################
 # GOOGLE CLOUD PLATFORM

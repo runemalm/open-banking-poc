@@ -1,9 +1,8 @@
-﻿using DDD.Domain.Model;
-using MediatR;
+﻿using OpenDDD.Domain.Model;
 
 namespace Sessions.Domain.Model
 {
-    public class SessionReadyToStart : IDomainEvent, INotification
+    public class SessionReadyToStart : IDomainEvent
     {
         public Guid SessionId { get; }
 

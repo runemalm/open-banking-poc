@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sessions", "Sessions\Sessions.csproj", "{2AAB0286-5906-4E52-87A8-288B18545153}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDD", "DDD\DDD.csproj", "{089092A3-2F6B-4969-A095-BB1E4582A19E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenDDD", "..\..\..\OpenDDD.NET\src\OpenDDD\OpenDDD.csproj", "{7A17771A-4631-43B4-AFF2-73784840FB5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,9 +14,9 @@ Global
 		{2AAB0286-5906-4E52-87A8-288B18545153}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AAB0286-5906-4E52-87A8-288B18545153}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AAB0286-5906-4E52-87A8-288B18545153}.Release|Any CPU.Build.0 = Release|Any CPU
-		{089092A3-2F6B-4969-A095-BB1E4582A19E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{089092A3-2F6B-4969-A095-BB1E4582A19E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{089092A3-2F6B-4969-A095-BB1E4582A19E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{089092A3-2F6B-4969-A095-BB1E4582A19E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A17771A-4631-43B4-AFF2-73784840FB5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A17771A-4631-43B4-AFF2-73784840FB5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A17771A-4631-43B4-AFF2-73784840FB5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A17771A-4631-43B4-AFF2-73784840FB5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

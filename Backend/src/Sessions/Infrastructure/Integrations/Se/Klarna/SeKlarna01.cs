@@ -279,10 +279,7 @@ namespace Sessions.Infrastructure.Integrations.Se.Klarna
                         Console.WriteLine("New QR Code captured.");
 
                         // Send the QR code as challenge input
-                        await RequestInputAsync(InputRequestType.Challenge, new Dictionary<string, string>
-                        {
-                            { "qrCodeData", qrCodeSrc }
-                        });
+                        await RequestInputAsync(InputRequestType.Challenge, RequestParams.With("qrCodeData", qrCodeSrc));
                     }
 
                     await Task.Delay(qrCodePollingIntervalMs);

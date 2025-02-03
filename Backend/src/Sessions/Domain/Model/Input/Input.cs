@@ -1,4 +1,4 @@
-﻿using DDD.Domain.Model;
+﻿using OpenDDD.Domain.Model.Base;
 
 namespace Sessions.Domain.Model.Input
 {
@@ -7,13 +7,12 @@ namespace Sessions.Domain.Model.Input
         public InputStatus Status { get; private set; }
         public DateTime? RequestedAt { get; private set; }
         public InputRequestType? RequestType { get; private set; }
-        public Dictionary<string, string?>? RequestParams { get; private set; }
+        public RequestParams RequestParams { get; set; }
 
         public int? Attempt { get; private set; }
         public DateTime? ProvidedAt { get; private set; }
         public string? Value { get; private set; }
         public InputError? Error { get; private set; }
-        public string? ErrorMessage { get; private set; }
 
         private Input(Guid id) : base(id)
         {
@@ -31,7 +30,7 @@ namespace Sessions.Domain.Model.Input
             return input;
         }
 
-        public void Request(InputRequestType requestType, Dictionary<string, string?>? requestParams = null)
+        public void Request(InputRequestType requestType, RequestParams? requestParams = null)
         {
             Status = InputStatus.Requested;
             RequestedAt = DateTime.UtcNow;
@@ -41,7 +40,6 @@ namespace Sessions.Domain.Model.Input
             ProvidedAt = null;
             Value = null;
             Error = null;
-            ErrorMessage = null;
             Attempt = null;
         }
 
@@ -50,7 +48,7 @@ namespace Sessions.Domain.Model.Input
             if (Status != InputStatus.Requested)
                 throw new InvalidOperationException("Input has not been requested.");
 
-            RequestParams?.TryAdd(name, value);
+            RequestParams.Data.TryAdd(name, value);
         }
 
         public void Provide(string value)
@@ -62,7 +60,6 @@ namespace Sessions.Domain.Model.Input
             ProvidedAt = DateTime.UtcNow;
             Value = value;
             Error = null;
-            ErrorMessage = null;
             Attempt++;
         }
         
@@ -73,7 +70,6 @@ namespace Sessions.Domain.Model.Input
 
             Status = InputStatus.Error;
             Error = error;
-            ErrorMessage = errorMessage;
         }
     }
 }

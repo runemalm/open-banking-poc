@@ -39,10 +39,10 @@ namespace Sessions.Domain.Services
         
         public async Task<Session> StartSessionAsync(Guid sessionId, CancellationToken ct)
         {
-            var session = await _sessionRepository.GetAsync(sessionId);
+            var session = await _sessionRepository.GetAsync(sessionId, ct);
             session.BindStateMachine(_stateMachineFactory.CreateForSession(session));
             
-            var input = await _inputRepository.GetAsync(sessionId);
+            var input = await _inputRepository.GetAsync(sessionId, ct);
             
             session.OnStateChanged += (_, _) =>
             {
@@ -52,7 +52,7 @@ namespace Sessions.Domain.Services
             session.OnInputRequested += (inputRequestType, requestParams) =>
             {
                 Console.WriteLine($"Input was requested...");
-                input = _inputRepository.GetAsync(sessionId).GetAwaiter().GetResult();
+                input = _inputRepository.GetAsync(sessionId, ct).GetAwaiter().GetResult();
                 input.Request(inputRequestType, requestParams);
                 _inputRepository.SaveAsync(input, ct).GetAwaiter().GetResult();
             };
@@ -72,7 +72,7 @@ namespace Sessions.Domain.Services
             {
                 ct.ThrowIfCancellationRequested(); // Support for cancellation
 
-                session = await _sessionRepository.GetAsync(session.Id);
+                session = await _sessionRepository.GetAsync(session.Id, ct);
 
                 Console.WriteLine($"Session {session.Id} current state: {session.State}");
 
@@ -84,15 +84,15 @@ namespace Sessions.Domain.Services
         
         public async Task<Input> ProvideInputAsync(Session session, string value, CancellationToken ct)
         {
-            var input = await _inputRepository.GetAsync(session.Id);
+            var input = await _inputRepository.GetAsync(session.Id, ct);
             input.Provide(value);
             return input;
         }
         
         public async Task<(State, Input)> GetCurrentStateAndInputAsync(Guid sessionId, CancellationToken ct)
         {
-            var session = await _sessionRepository.GetAsync(sessionId);
-            var input = await _inputRepository.GetAsync(sessionId);
+            var session = await _sessionRepository.GetAsync(sessionId, ct);
+            var input = await _inputRepository.GetAsync(sessionId, ct);
             return (session.State, input);
         }
     }

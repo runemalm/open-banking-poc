@@ -1,4 +1,4 @@
-﻿using DDD.Domain.Model;
+﻿using OpenDDD.Domain.Model;
 
 namespace Sessions.Domain.Model.BankAccounts
 {
@@ -6,7 +6,7 @@ namespace Sessions.Domain.Model.BankAccounts
     {
         public List<BankAccount> Accounts { get; set; }
 
-        private BankAccounts() { }
+        public BankAccounts() { }
 
         public static BankAccounts Create(List<BankAccount> accounts)
         {

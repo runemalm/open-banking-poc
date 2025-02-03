@@ -1,30 +1,30 @@
-﻿using DDD.Application;
+﻿using OpenDDD.Application;
+using Hangfire;
+using OpenDDD.Domain.Model;
 using Sessions.Application.Actions.StartSession;
 using Sessions.Domain.Model;
 using Sessions.Domain.Model.Input;
 using Sessions.Domain.Services;
-using Hangfire;
-using MediatR;
 
 namespace Sessions.Application.Actions.CreateSession
 {
-    public class CreateSessionAction : IAction<CreateSessionCommand, (Session, Domain.Model.Input.Input)>
+    public class CreateSessionAction : IAction<CreateSessionCommand, (Session, Input)>
     {
         private readonly ISessionDomainService _sessionDomainService;
         private readonly ISessionRepository _sessionRepository;
         private readonly IInputRepository _inputRepository;
-        private readonly IMediator _mediator;
+        private readonly IDomainPublisher _domainPublisher;
 
         public CreateSessionAction(
             ISessionDomainService sessionDomainService, 
             ISessionRepository sessionRepository,
             IInputRepository inputRepository,
-            IMediator mediator)
+            IDomainPublisher domainPublisher)
         {
             _sessionDomainService = sessionDomainService;
             _sessionRepository = sessionRepository;
             _inputRepository = inputRepository;
-            _mediator = mediator;
+            _domainPublisher = domainPublisher;
         }
 
         public async Task<(Session, Input)> ExecuteAsync(CreateSessionCommand command, CancellationToken ct)
@@ -37,7 +37,7 @@ namespace Sessions.Application.Actions.CreateSession
             
             if (session.State == State.ReadyToStart)
             {
-                // await _mediator.Publish(new SessionReadyToStart(session.Id), ct);
+                // await _domainPublisher.PublishAsync(new SessionReadyToStart(session.Id), ct);
                 
                 BackgroundJob.Enqueue<StartSessionAction>(action =>
                     action.ExecuteAsync(new StartSessionCommand(session.Id), CancellationToken.None));

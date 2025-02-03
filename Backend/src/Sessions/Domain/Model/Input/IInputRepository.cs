@@ -1,4 +1,4 @@
-﻿using DDD.Domain.Model;
+﻿using OpenDDD.Domain.Model;
 
 namespace Sessions.Domain.Model.Input
 {

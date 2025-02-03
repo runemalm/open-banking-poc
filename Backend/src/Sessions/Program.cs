@@ -1,31 +1,15 @@
-using DDD.Infrastructure.Repositories.EF.Configurations;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using OpenDDD.API.Extensions;
 using Hangfire;
 using Hangfire.PostgreSql;
-using Sessions.Application.Actions.CreateSession;
-using Sessions.Application.Actions.GetBanks;
-using Sessions.Application.Actions.GetIntegrations;
-using Sessions.Application.Actions.GetSession;
-using Sessions.Application.Actions.GetState;
-using Sessions.Application.Actions.ProvideInput;
-using Sessions.Application.Actions.SelectBank;
-using Sessions.Application.Actions.SelectIntegration;
-using Sessions.Application.Actions.StartSession;
-using Sessions.Domain.Model;
-using Sessions.Domain.Model.Bank;
-using Sessions.Domain.Model.Input;
-using Sessions.Domain.Model.Integration;
+using Hangfire.MemoryStorage;
+using Sessions;
 using Sessions.Domain.Model.StateMachine.Factory;
-using Sessions.Domain.Services;
 using Sessions.Infrastructure.Integrations.Se.Klarna;
 using Sessions.Infrastructure.Integrations.Se.Seb;
 using Sessions.Infrastructure.Integrations.Se.Swedbank;
-using Sessions.Infrastructure.Repositories.EF;
-using Sessions.Infrastructure.Repositories.EF.Configurations;
-using Sessions.Infrastructure.Repositories.EF.Context;
-using Sessions.Infrastructure.Repositories.EF.Seeders;
-using Hangfire.MemoryStorage;
+using Sessions.Infrastructure.Persistence.EfCore.Context;
+using Sessions.Infrastructure.Persistence.EfCore.Seeders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,7 +26,7 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "Open Banking",
         Version = "v1",
-        Description = "This is a custom description for the API",
+        Description = "The open-banking-poc API",
         Contact = new OpenApiContact
         {
             Name = "David Runemalm",
@@ -50,22 +34,6 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
-
-// Hangfire configuration
-builder.Services.AddHangfire(config =>
-{
-    if (builder.Environment.IsDevelopment())
-    {
-        config.UsePostgreSqlStorage(builder.Configuration.GetConnectionString("DefaultConnection"));
-    }
-    else
-    {
-        config.UseMemoryStorage();
-    }
-    
-    GlobalJobFilters.Filters.Add(new AutomaticRetryAttribute { Attempts = 0 });
-});
-builder.Services.AddHangfireServer();
 
 // Configure CORS
 builder.Services.AddCors(options =>
@@ -86,55 +54,48 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
     });
 
-// Add repositories
-if (builder.Environment.IsDevelopment())
-{
-    Console.WriteLine("Using PostgreSQL Database...");
-    builder.Services.AddDbContext<SessionDbContext>(options =>
-        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-}
-else
-{
-    Console.WriteLine("Using In-Memory Database...");
-    builder.Services.AddDbContext<SessionDbContext>(options =>
-        options.UseInMemoryDatabase("InMemoryDb"));
-}
-
-EfDbContextConfiguration.AdditionalAssemblies.Add(typeof(SessionConfiguration).Assembly);
-
-builder.Services.AddScoped<ISessionDbContext>(provider => provider.GetRequiredService<SessionDbContext>());
-builder.Services.AddScoped<IBankRepository, EfBankRepository>();
-builder.Services.AddScoped<IIntegrationRepository, EfIntegrationRepository>();
-builder.Services.AddScoped<ISessionRepository, EfSessionRepository>();
-builder.Services.AddScoped<IInputRepository, EfInputRepository>();
-
-// Add actions
-builder.Services.AddTransient<GetBanksAction>();
-builder.Services.AddTransient<GetIntegrationsAction>();
-builder.Services.AddTransient<CreateSessionAction>();
-builder.Services.AddTransient<SelectBankAction>();
-builder.Services.AddTransient<SelectIntegrationAction>();
-builder.Services.AddTransient<StartSessionAction>();
-builder.Services.AddTransient<ProvideInputAction>();
-builder.Services.AddTransient<GetStateAction>();
-builder.Services.AddTransient<GetSessionAction>();
-
-// MediatR
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly));
+builder.Services.AddOpenDDD<SessionDbContext>(builder.Configuration, 
+    options =>  
+    {
+        
+    },
+    services =>
+    {
+        services.AddScoped<SeSeb01>();
+        services.AddScoped<SeSwedbank01>();
+        services.AddScoped<SeKlarna01>();
+    }
+);
 
 // State machine
 builder.Services.AddTransient<IStateMachineFactory, StateMachineFactory>();
 
-// Bank adapters
-builder.Services.AddScoped<SeSeb01>();
-builder.Services.AddScoped<SeSwedbank01>();
-builder.Services.AddScoped<SeKlarna01>();
+// Add Hangfire Services
+var hangfireOptions = new HangfireOptions();
+builder.Configuration.GetSection("Hangfire").Bind(hangfireOptions);
 
-// Domain Services
-builder.Services.AddScoped<ISessionDomainService, SessionDomainService>();
+builder.Services.AddHangfire(config =>
+{
+    switch (hangfireOptions.StorageType.ToLower())
+    {
+        case "postgres":
+            config.UsePostgreSqlStorage(hangfireOptions.ConnectionString);
+            break;
+        default:
+            config.UseMemoryStorage();
+            break;
+    }
 
-// Build the web application
+    GlobalJobFilters.Filters.Add(new AutomaticRetryAttribute { Attempts = 0 });
+});
+
+builder.Services.AddHangfireServer();
+
+// Build the application
 var app = builder.Build();
+
+// Use OpenDDD Middleware
+app.UseOpenDDD();
 
 // Seed data
 await DatabaseSeeder.SeedAsync(app.Services);
@@ -154,8 +115,13 @@ app.UseHttpsRedirection();
 // Use the cors policy
 app.UseCors("AllowAll");
 
-// Add controllers to the pipeline
+// Add controllers actions to endpoints
 app.MapControllers();
 
-// Run the app
+// Manually map a route to a method invocation
+app.Map("/health", appBuilder => appBuilder.Run(async context =>
+{
+    await context.Response.WriteAsync("Healthy");
+}));
+
 app.Run();

@@ -1,9 +1,10 @@
-﻿using Sessions.Domain.Model;
+﻿using OpenDDD.Domain.Service;
+using Sessions.Domain.Model;
 using Sessions.Domain.Model.Input;
 
 namespace Sessions.Domain.Services
 {
-	public interface ISessionDomainService
+	public interface ISessionDomainService : IDomainService
 	{
 		Task<(Session, Input)> CreateSessionAsync(SessionType type, string? bankId, string? integrationId, CancellationToken ct);
 		Task SelectBankAsync(Session session, string bankId, CancellationToken ct);
