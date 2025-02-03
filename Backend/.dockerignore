@@ -1,0 +1,41 @@
+# Ignore build directories
+bin/
+obj/
+.vs/
+**/bin/
+**/obj/
+**/out/
+
+# Ignore user-specific files
+*.user
+*.suo
+*.swp
+
+# Ignore logs and temp files
+*.log
+logs/
+temp/
+*.tmp
+
+# Ignore IDE settings
+.idea/
+.vscode/
+*.sln.ide
+
+# Ignore Docker-related files
+Dockerfile
+.dockerignore
+
+# Ignore Git repository files
+**/.git/
+.gitignore
+
+# Ignore environment and secret files
+.env
+secrets.json
+**/appsettings.Development.json
+
+# Ignore SQLite database files (in any subdirectory)
+**/*.db
+**/*.db-wal
+**/*.db-shm

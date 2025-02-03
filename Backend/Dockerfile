@@ -26,6 +26,10 @@ RUN dotnet publish -c Release -o /app/publish
 # Final runtime image
 FROM base AS final
 WORKDIR /app
+
+# Ensure the Data directory exists
+RUN mkdir -p /app/Data/EfCore && chmod -R 777 /app/Data/EfCore
+
 COPY --from=build /app/publish .
 
 # Debugging: List files in the /app directory
