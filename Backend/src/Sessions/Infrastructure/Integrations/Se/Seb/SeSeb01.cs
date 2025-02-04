@@ -1,8 +1,8 @@
+using PuppeteerSharp;
 using Sessions.Domain.Model;
 using Sessions.Domain.Model.Input;
 using Sessions.Domain.Model.StateMachine;
 using Sessions.Domain.Model.User;
-using PuppeteerSharp;
 
 namespace Sessions.Infrastructure.Integrations.Se.Seb
 {
@@ -25,11 +25,17 @@ namespace Sessions.Infrastructure.Integrations.Se.Seb
 
         private IBrowser? _browser;
         private IPage? _page;
+        private ILogger<SeSeb01> _logger;
 
-        public SeSeb01(ISessionRepository sessionRepository, IInputRepository inputRepository, IConfiguration configuration) 
+        public SeSeb01(
+            ISessionRepository sessionRepository, 
+            IInputRepository inputRepository, 
+            IConfiguration configuration,
+            ILogger<SeSeb01> logger) 
             : base(sessionRepository, inputRepository, configuration)
         {
-            
+            _logger = logger;
+
         }
 
         protected override async Task DoAuthenticateAsync()
@@ -92,34 +98,61 @@ namespace Sessions.Infrastructure.Integrations.Se.Seb
         
         private async Task SetupBrowserAsync()
         {
-            Console.WriteLine("Setting up browser...");
-            
+            _logger.LogInformation("Setting up browser...");
+
             try
             {
-                var browserFetcher = new BrowserFetcher();
-                await browserFetcher.DownloadAsync();
-                
                 var isHeadless = _configuration.GetValue<bool>("BrowserOptions:Headless");
+                var downloadBrowser = _configuration.GetValue<bool>("BrowserOptions:DownloadBrowser");
 
-                _browser = await Puppeteer.LaunchAsync(new LaunchOptions
+                _logger.LogInformation("Browser options: Headless={IsHeadless}, DownloadBrowser={DownloadBrowser}", isHeadless, downloadBrowser);
+
+                if (downloadBrowser)
+                {
+                    _logger.LogInformation("Downloading Chromium...");
+                    var browserFetcher = new BrowserFetcher();
+                    await browserFetcher.DownloadAsync();
+                    _logger.LogInformation("Chromium download complete.");
+                }
+
+                var launchOptions = new LaunchOptions
                 {
                     Headless = isHeadless,
                     Args = new[] { "--no-sandbox", "--disable-setuid-sandbox" },
                     Timeout = 300000 // 5 minutes
-                });
+                };
 
-                _page = (await _browser.PagesAsync()).First();
-                
+                if (!downloadBrowser)
+                {
+                    launchOptions.ExecutablePath = Environment.GetEnvironmentVariable("PUPPETEER_EXECUTABLE_PATH") ?? "/usr/bin/chromium";
+                    _logger.LogInformation("Using system-installed Chromium at {ExecutablePath}", launchOptions.ExecutablePath);
+                }
+
+                _logger.LogInformation("Launching Puppeteer...");
+                _browser = await Puppeteer.LaunchAsync(launchOptions);
+                _logger.LogInformation("Puppeteer launched successfully.");
+
+                var pages = await _browser.PagesAsync();
+                _page = pages.First();
+                _logger.LogInformation("Connected to existing page.");
+
+                _page.Console += (sender, args) =>
+                {
+                    _logger.LogInformation("[Browser Console] {BrowserMessage}", args.Message.Text);
+                };
+
                 // Set viewport to MacBook Pro screen width and half size
                 await _page.SetViewportAsync(new ViewPortOptions
                 {
                     Width = 1440,
                     Height = 450
                 });
+
+                _logger.LogInformation("Browser setup completed successfully.");
             }
             catch (Exception ex)
             {
-                throw new Exception($"Failed to setup the browser: {ex.Message}");
+                throw new Exception($"Failed to setup the browser: {ex.Message}", ex);
             }
         }
         
