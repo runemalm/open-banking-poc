@@ -23,7 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\..\OpenDDD.NET\src\OpenDDD\OpenDDD.csproj" />
+      <ProjectReference Include="..\OpenDDD\OpenDDD.csproj" />
     </ItemGroup>
 
 </Project>

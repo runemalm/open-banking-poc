@@ -11,7 +11,7 @@ using Sessions.Infrastructure.Persistence.EfCore.Context;
 namespace Sessions.Infrastructure.Persistence.EfCore.Migrations
 {
     [DbContext(typeof(SessionDbContext))]
-    [Migration("20250203181942_Initial")]
+    [Migration("20250204133740_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

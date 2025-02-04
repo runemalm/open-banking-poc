@@ -1,5 +1,6 @@
 using Microsoft.OpenApi.Models;
 using OpenDDD.API.Extensions;
+using OpenDDD.Infrastructure.Persistence.EfCore.Seeders;
 using Hangfire;
 using Hangfire.PostgreSql;
 using Hangfire.MemoryStorage;
@@ -64,6 +65,7 @@ builder.Services.AddOpenDDD<SessionDbContext>(builder.Configuration,
         services.AddScoped<SeSeb01>();
         services.AddScoped<SeSwedbank01>();
         services.AddScoped<SeKlarna01>();
+        services.AddTransient<IEfCoreSeeder, SessionsSeeder>();
     }
 );
 
@@ -96,9 +98,6 @@ var app = builder.Build();
 
 // Use OpenDDD Middleware
 app.UseOpenDDD();
-
-// Seed data
-await DatabaseSeeder.SeedAsync(app.Services);
 
 // Configure the HTTP request pipeline
 app.UseSwagger();

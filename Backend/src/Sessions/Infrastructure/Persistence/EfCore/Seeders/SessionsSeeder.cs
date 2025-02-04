@@ -1,23 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OpenDDD.Infrastructure.Persistence.EfCore.Base;
+using OpenDDD.Infrastructure.Persistence.EfCore.Seeders;
 using Sessions.Domain.Model;
 using Sessions.Domain.Model.Bank;
 using Sessions.Domain.Model.Integration;
-using Sessions.Infrastructure.Persistence.EfCore.Context;
 
 namespace Sessions.Infrastructure.Persistence.EfCore.Seeders
 {
-    public static class DatabaseSeeder
+    public class SessionsSeeder : IEfCoreSeeder
     {
-        public static async Task SeedAsync(IServiceProvider services)
+        public async Task ExecuteAsync(OpenDddDbContextBase dbContext, CancellationToken ct)
         {
-            using var scope = services.CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<SessionDbContext>();
-
-            // Ensure database exists
-            await context.Database.EnsureCreatedAsync();
-
             // Seed banks and integrations
-            if (!await context.Set<Bank>().AnyAsync() && !await context.Set<Integration>().AnyAsync())
+            if (!await dbContext.Set<Bank>().AnyAsync() && !await dbContext.Set<Integration>().AnyAsync())
             {
                 // Create banks
                 var swedbank = Bank.Create("Swedbank");
@@ -47,8 +42,8 @@ namespace Sessions.Infrastructure.Persistence.EfCore.Seeders
                 klarna.AddIntegration(seKlarna02);
 
                 // Add banks (and their integrations through EF Core cascading)
-                context.Set<Bank>().AddRange(swedbank, seb, klarna);
-                await context.SaveChangesAsync();
+                dbContext.Set<Bank>().AddRange(swedbank, seb, klarna);
+                await dbContext.SaveChangesAsync();
             }
         }
     }

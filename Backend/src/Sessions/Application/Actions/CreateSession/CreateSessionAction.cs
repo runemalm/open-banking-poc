@@ -1,6 +1,6 @@
 ﻿using OpenDDD.Application;
-using Hangfire;
 using OpenDDD.Domain.Model;
+using Hangfire;
 using Sessions.Application.Actions.StartSession;
 using Sessions.Domain.Model;
 using Sessions.Domain.Model.Input;
