@@ -354,7 +354,7 @@ namespace Sessions.Infrastructure.Integrations.Se.Klarna
         
         private async Task GetUserInformationAsync()
         {
-            const int timeoutMs = 20000;
+            const int timeoutMs = 45000;
             const int pollingIntervalMs = 500;
 
             try
@@ -368,32 +368,59 @@ namespace Sessions.Infrastructure.Integrations.Se.Klarna
                 {
                     WaitUntil = new[] { WaitUntilNavigation.Networkidle0 }
                 });
+                
+                // Wait for the profile button in the <header>
+                Console.WriteLine("Waiting for the profile button...");
 
-                // Wait for the heart icon to appear
-                Console.WriteLine("Waiting for the heart icon to load...");
-                await _page.WaitForSelectorAsync("g#Heart", new WaitForSelectorOptions
+                var timeoutAt = DateTime.UtcNow.AddMilliseconds(timeoutMs);
+                bool found = false;
+
+                while (DateTime.UtcNow < timeoutAt)
                 {
-                    Visible = true,
-                    Timeout = timeoutMs
-                });
+                    found = await _page.EvaluateFunctionAsync<bool>(@"
+                        () => {
+                            const header = document.querySelector('header');
+                            if (!header) return false;
 
-                // Click the profile button
-                Console.WriteLine("Attempting to click the profile button...");
-                var profileButtonClicked = await _page.EvaluateFunctionAsync<bool>(@$"
-                    () => {{
-                        const heartIcon = document.querySelector('g#Heart');
-                        if (!heartIcon) return false;
+                            const divs = Array.from(header.querySelectorAll('div'));
+                            return divs.some(div => div.querySelectorAll('button').length === 3);
+                        }
+                    ");
+                    if (!found) await Task.Delay(pollingIntervalMs);
+                }
 
-                        const containerDiv = heartIcon.closest('div');
-                        const profileButton = containerDiv?.querySelector('button:nth-of-type(2)');
-                        if (!profileButton) return false;
+                if (!found)
+                    throw new TimeoutException("Timed out waiting for the profile button.");
 
-                        profileButton.click();
-                        return true;
-                    }}
+                Console.WriteLine("Profile button container detected. Attempting to click the last button...");
+
+                bool profileButtonClicked = await _page.EvaluateFunctionAsync<bool>(@"
+                    () => {
+                        const header = document.querySelector('header');
+                        if (!header) return false;
+
+                        const divs = Array.from(header.querySelectorAll('div'));
+
+                        // Find the div containing exactly 3 buttons
+                        const targetDiv = divs.find(div => div.querySelectorAll('button').length === 3);
+                        if (!targetDiv) return false;
+
+                        const buttons = targetDiv.querySelectorAll('button');
+                        const profileButton = buttons[buttons.length - 1];
+
+                        if (profileButton) {
+                            profileButton.click();
+                            return true;
+                        }
+
+                        return false;
+                    }
                 ");
+
                 if (!profileButtonClicked)
                     throw new InvalidOperationException("Failed to locate or click the profile button.");
+
+                Console.WriteLine("Successfully clicked the profile button.");
 
                 // Wait for the profile overlay
                 Console.WriteLine("Waiting for the profile overlay...");

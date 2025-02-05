@@ -106,7 +106,9 @@ app.UseSwaggerUI();
 // Enable Hangfire Dashboard
 app.UseHangfireDashboard("/hangfire", new DashboardOptions
 {
-    Authorization = new[] { new Hangfire.Dashboard.LocalRequestsOnlyAuthorizationFilter() } // Optional security
+    Authorization = new[] { new HangfireAllowAllAuthFilter() }
+    // Authorization = new[] { new HangfireBasicAuthFilter("admin", "password") }
+    // Authorization = new[] { new Hangfire.Dashboard.LocalRequestsOnlyAuthorizationFilter() }
 });
 
 app.UseHttpsRedirection();

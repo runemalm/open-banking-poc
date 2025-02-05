@@ -7,9 +7,9 @@ import reportWebVitals from './reportWebVitals';
 
 const config = {
   api: {
-    baseUrl: "http://localhost:5122/api"
+    // baseUrl: "http://localhost:5122/api"
     // baseUrl: "http://localhost:8080/api"
-    // baseUrl: "https://sessions-backend-102101218198.europe-north1.run.app/api"
+    baseUrl: "https://sessions-backend-102101218198.europe-north1.run.app/api"
   }
 };
 

@@ -226,7 +226,9 @@ gcp-deploy: ## Deploy the backend to Google Cloud Run
 		--platform=managed \
 		--region=$(REGION) \
 		--allow-unauthenticated \
-		--memory=2Gi
+		--memory=16Gi \
+		--cpu=6 \
+		--max-instances=1
 	@echo "Deployment successful!"
 
 .PHONY: gcp-metrics

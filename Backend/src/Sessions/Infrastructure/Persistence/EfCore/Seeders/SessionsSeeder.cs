@@ -28,18 +28,15 @@ namespace Sessions.Infrastructure.Persistence.EfCore.Seeders
                 var seSwedbank01 = Integration.Create("SeSwedbank01", "BankID i mobilen", swedbank.Id);
                 var seSeb01 = Integration.Create("SeSeb01", "BankID i mobilen", seb.Id);
                 var seKlarna01 = Integration.Create("SeKlarna01", "BankID i mobilen", klarna.Id);
-                var seKlarna02 = Integration.Create("SeKlarna02", "BankID i mobilen (2)", klarna.Id);
 
                 typeof(Integration).GetProperty("Id")!.SetValue(seSwedbank01, IdConstants.SeSwedbank01);
                 typeof(Integration).GetProperty("Id")!.SetValue(seSeb01, IdConstants.SeSeb01);
                 typeof(Integration).GetProperty("Id")!.SetValue(seKlarna01, IdConstants.SeKlarna01);
-                typeof(Integration).GetProperty("Id")!.SetValue(seKlarna02, IdConstants.SeKlarna02);
 
                 // Add the integrations to their respective banks
                 swedbank.AddIntegration(seSwedbank01);
                 seb.AddIntegration(seSeb01);
                 klarna.AddIntegration(seKlarna01);
-                klarna.AddIntegration(seKlarna02);
 
                 // Add banks (and their integrations through EF Core cascading)
                 dbContext.Set<Bank>().AddRange(swedbank, seb, klarna);
