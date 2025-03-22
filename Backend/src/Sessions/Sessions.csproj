@@ -17,13 +17,10 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="OpenDDD.NET" Version="3.0.0-beta.2" />
         <PackageReference Include="PuppeteerSharp" Version="20.0.5" />
         <PackageReference Include="Stateless" Version="5.16.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\OpenDDD\OpenDDD.csproj" />
     </ItemGroup>
 
 </Project>

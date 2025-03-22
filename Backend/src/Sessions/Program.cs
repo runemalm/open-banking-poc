@@ -65,7 +65,6 @@ builder.Services.AddOpenDDD<SessionDbContext>(builder.Configuration,
         services.AddScoped<SeSeb01>();
         services.AddScoped<SeSwedbank01>();
         services.AddScoped<SeKlarna01>();
-        services.AddTransient<IEfCoreSeeder, SessionsSeeder>();
     }
 );
 
