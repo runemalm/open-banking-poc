@@ -24,7 +24,6 @@ COPY src/Sessions.sln ./
 
 # Copy all project files (to benefit from layer caching during restore)
 COPY src/Sessions/Sessions.csproj ./Sessions/
-COPY src/OpenDDD/OpenDDD.csproj ./OpenDDD/
 
 # Restore dependencies
 RUN dotnet restore Sessions.sln
